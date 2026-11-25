@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="console-token" content="__CONSOLE_TOKEN__">
+  <title>Agent Console</title>
+  <link rel="stylesheet" href="/app.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <span class="logo" aria-hidden="true"></span>
+      <span>Agent Console</span>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button role="tab" data-view="ops" aria-selected="true">Operations</button>
+      <button role="tab" data-view="marketing" aria-selected="false">Marketing</button>
+      <button role="tab" data-view="history" aria-selected="false">History</button>
+    </nav>
+    <div class="pills" id="pills"></div>
+  </header>
+
+  <main>
+    <div id="banner" class="banner" hidden></div>
+
+    <!-- Operations -->
+    <section class="view" id="view-ops">
+      <div class="col">
+        <div class="card">
+          <h2>Rental operations agent</h2>
+          <p class="muted">An operations expert for tokenized rental properties: investors, rent distributions, reporting, compliance, and the smart contracts. It answers from expertise and checks live data once your app is connected. It never signs anything.</p>
+          <p class="data-line" id="data-line"></p>
+          <div class="row">
+            <button class="primary" id="ops-health">Run health check</button>
+          </div>
+          <form id="ops-ask" class="ask">
+            <label for="ops-question">Or ask a question</label>
+            <textarea id="ops-question" rows="3" placeholder="A tenant is two months behind on rent. What happens to this month's distribution, and what should we tell investors?"></textarea>
+            <button type="submit">Ask</button>
+          </form>
+        </div>
+        <div class="card feed-card" id="ops-feed-card" hidden>
+          <div class="feed-head">
+            <h3 id="ops-feed-title">Run</h3>
+            <span class="status" id="ops-feed-status"></span>
+            <button class="ghost small" id="ops-stop" hidden>Stop</button>
+          </div>
+          <ol class="feed" id="ops-feed"></ol>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card">
+          <div class="subtabs" role="tablist">
+            <button data-sub="reports" aria-selected="true">Reports</button>
+            <button data-sub="alerts" aria-selected="false">Alerts <span class="count" id="alerts-count"></span></button>
+            <button data-sub="proposals" aria-selected="false">Proposals <span class="count" id="proposals-count"></span></button>
+          </div>
+          <div class="sub" id="sub-reports">
+            <div class="split">
+              <ul class="list" id="reports-list"></ul>
+              <article class="md" id="report-view"><p class="muted">Pick a report.</p></article>
+            </div>
+          </div>
+          <div class="sub" id="sub-alerts" hidden><ul class="list" id="alerts-list"></ul></div>
+          <div class="sub" id="sub-proposals" hidden>
+            <p class="muted">Drafted transactions. Nothing here was sent. To act on one: copy it, open app.safe.global → Apps → Transaction Builder, drop the JSON in, check it, and sign with the Safe owners.</p>
+            <ul class="list" id="proposals-list"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Marketing -->
+    <section class="view" id="view-marketing" hidden>
+      <div class="col">
+        <form class="card" id="mkt-form">
+          <h2>Marketing agent</h2>
+          <p class="muted">Builds a full campaign for anything: goal, audience, strategy, timeline, ready-to-post content, and how to measure it. An honesty check reviews every campaign, then it waits here for you. Nothing posts by itself.</p>
+          <label>What should we market?
+            <textarea id="mkt-subject" rows="2" required placeholder="A Saturday pottery class for beginners in Leeds"></textarea>
+          </label>
+          <label>Notes (optional)
+            <textarea id="mkt-brief" rows="2" placeholder="Starts March 8, £25 a class, 10 spots, we have an Instagram with 300 followers"></textarea>
+          </label>
+          <div class="grid2">
+            <label>Brand pack (optional) <select id="mkt-brand"></select></label>
+            <label class="check grid-check"><input type="checkbox" id="mkt-web" checked> Research the web</label>
+          </div>
+          <div class="row"><button class="primary" type="submit">Build campaign</button></div>
+        </form>
+        <div class="card feed-card" id="mkt-feed-card" hidden>
+          <div class="feed-head">
+            <h3 id="mkt-feed-title">Run</h3>
+            <span class="status" id="mkt-feed-status"></span>
+            <button class="ghost small" id="mkt-stop" hidden>Stop</button>
+          </div>
+          <ol class="feed" id="mkt-feed"></ol>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card">
+          <div class="subtabs" role="tablist">
+            <button data-q="pending" aria-selected="true">To review <span class="count" id="q-pending"></span></button>
+            <button data-q="approved" aria-selected="false">Approved <span class="count" id="q-approved"></span></button>
+            <button data-q="rejected" aria-selected="false">Rejected <span class="count" id="q-rejected"></span></button>
+          </div>
+          <div class="row" id="publish-row" hidden>
+            <button class="primary" id="publish-btn">Export approved to outbox</button>
+            <span class="muted small-text">Writes each campaign to marketing-agent/outbox/ as Markdown. No channel is connected yet.</span>
+          </div>
+          <ul class="drafts" id="campaigns"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- History -->
+    <section class="view single" id="view-history" hidden>
+      <div class="card">
+        <h2>Runs</h2>
+        <div class="split wide">
+          <ul class="list" id="runs-list"></ul>
+          <ol class="feed" id="history-feed"><li class="muted">Pick a run to replay it.</li></ol>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
